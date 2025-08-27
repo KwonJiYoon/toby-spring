@@ -6,8 +6,8 @@ import java.sql.*;
 
 public class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");  // mySql 8.xx 버전부터
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/toby_spring?serverTimezone=Asia/Seoul", "root", "yoon980112@");
+        // DB 연결 기능
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -20,8 +20,8 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/toby_spring?serverTimezone=Asia/Seoul", "root", "yoon980112@");
+        // DB 연결 기능
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement("select * from users where id=?");
         ps.setString(1, id);
@@ -38,5 +38,13 @@ public class UserDao {
         c.close();
 
         return user;
+    }
+
+    // 중복된 코드를 독립적인 메소드로 만들어서 중복 제거
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/toby_spring?serverTimezone=Asia/Seoul", "root", "yoon980112@");
+
+        return c;
     }
 }
