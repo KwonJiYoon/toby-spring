@@ -1,5 +1,6 @@
 package springbook.user;
 
+import springbook.user.dao.DConnectionMaker;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao dao = new UserDao();
+        UserDao dao = new UserDao(new DConnectionMaker());
 
         User user = new User();
         user.setId("yoon");
