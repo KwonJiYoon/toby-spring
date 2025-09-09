@@ -1,18 +1,32 @@
 plugins {
     id 'java'
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
 }
+apply plugin: 'io.spring.dependency-management'
 
 group = 'springbook.user'
 version = '1.0-SNAPSHOT'
 
+
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repo.spring.io/plugins-release/'
+    }
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'mysql:mysql-connector-java:8.0.22'
+
+    // Spring Core
+    implementation 'org.springframework:spring-context:5.3.27'
+    implementation 'org.springframework:spring-beans:5.3.27'
+    implementation 'org.springframework:spring-aop:5.3.27'
+
+    // Logging
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
 }
 
 test {
